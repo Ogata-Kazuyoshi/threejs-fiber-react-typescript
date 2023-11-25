@@ -1,15 +1,17 @@
-import React from 'react';
-import { Boxpostion } from '../interface/global';
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useEffect,
+} from 'react';
 import {
-  Canvas,
   useThree,
   extend,
   useFrame,
   ReactThreeFiber,
 } from '@react-three/fiber';
 import { OrbitControls } from 'three/examples/jsm/Addons.js';
-import { useRef } from 'react';
-import { Camera, WebGLRenderer } from 'three';
+import { Camera, WebGLRenderer, Vector3 } from 'three';
 extend({ OrbitControls });
 
 // useThreeフックから返されるglオブジェクトの型
@@ -27,9 +29,22 @@ declare global {
   }
 }
 
-const BoxMoving: React.FC = () => {
+const MovingObject = forwardRef((props, ref) => {
   const { camera, gl } = useThree<ThreeCanvasProps>();
   const controlsRef = useRef<OrbitControls>(null);
+
+  useEffect(() => {
+    camera.position.set(3, 3, 3);
+    camera.lookAt(new Vector3(0, 0, 0));
+  }, [camera]);
+
+  useImperativeHandle(ref, () => ({
+    resetControls: () => {
+      if (controlsRef.current) {
+        controlsRef.current.reset();
+      }
+    },
+  }));
 
   useFrame(() => {
     if (controlsRef.current) {
@@ -37,7 +52,14 @@ const BoxMoving: React.FC = () => {
     }
   });
 
-  return <orbitControls ref={controlsRef} args={[camera, gl.domElement]} />;
-};
+  return (
+    <orbitControls
+      ref={controlsRef}
+      args={[camera, gl.domElement]}
+      rotateSpeed={0.8}
+      enabled={false}
+    />
+  );
+});
 
-export default BoxMoving;
+export default MovingObject;

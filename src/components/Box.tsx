@@ -5,6 +5,7 @@ import { Boxpostion } from '../interface/global';
 import { config, useSpring, animated } from '@react-spring/three';
 
 const Box: React.FC<Boxpostion> = (props) => {
+  const { position } = props;
   const [isClick, setIsClick] = useState<boolean>(false);
   const [isHover, setIsHover] = useState<boolean>(false);
   const ref = useRef<HTMLMesh>(null);
@@ -18,7 +19,7 @@ const Box: React.FC<Boxpostion> = (props) => {
 
   return (
     <animated.mesh
-      {...props}
+      position={position}
       ref={ref}
       onClick={() => {
         setIsClick(!isClick);
