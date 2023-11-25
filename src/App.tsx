@@ -3,6 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import Box from './components/Box';
 import BoxMoving from './components/BoxMoving';
 import React, { useState } from 'react';
+import RenderVehicle from './components/RenderVehicle';
 
 const App: React.FC = () => {
   const [isRotation, setIsRotation] = useState<boolean>(true);
@@ -22,13 +23,19 @@ const App: React.FC = () => {
             <pointLight position={[-10, -10, 10]} />
           </Canvas>
         ) : (
+          // <Canvas>
+          //   <ambientLight intensity={0.5} />
+          //   <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+          //   <mesh>
+          //     <boxGeometry args={[1, 1, 1]} />
+          //     <meshStandardMaterial color="orange" />
+          //   </mesh>
+          // <BoxMoving />
+          // </Canvas>
           <Canvas>
             <ambientLight intensity={0.5} />
             <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-            <mesh>
-              <boxGeometry args={[1, 1, 1]} />
-              <meshStandardMaterial color="orange" />
-            </mesh>
+            <RenderVehicle />
             <BoxMoving />
           </Canvas>
         )}
