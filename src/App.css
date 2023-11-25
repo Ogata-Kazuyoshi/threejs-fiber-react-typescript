@@ -53,3 +53,9 @@ a:hover {
   color: #fff;
   background: #000;
 }
+
+.change__page {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
